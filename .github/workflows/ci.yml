@@ -9,38 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [8.1,8.2,8.3]
+        php: [8.2,8.3,8.4,8.5]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        tools: pecl
-        extensions: xdebug
-    - name: Show php version
-      run: php -v && composer -V
-    - name: Debug if needed
-      run: if [[ "$DEBUG" == "true" ]]; then env; fi
-      env:
-        DEBUG: ${{secrets.DEBUG}}
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-    - name: Cache dependencies
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ matrix.os }}-composer-${{ hashFiles('**/composer.json') }}
-        restore-keys: ${{ matrix.os }}-composer-
+        coverage: none
     - name: Install dependencies
-      run: composer install --prefer-source
+      run: composer install
     - name: Run unit tests
-      run: ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-    - name: Run Coverage
-      run: ./vendor/bin/php-coveralls -v
-      env:
-        COVERALLS_RUN_LOCALLY: ${{ secrets.COVERALLS_RUN_LOCALLY }}
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      continue-on-error: true
-    - name: show coverage json
-      run: cat build/logs/coveralls-upload.json
+      run: ./vendor/bin/phpunit
