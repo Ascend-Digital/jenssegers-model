@@ -1,6 +1,14 @@
 Model
 =====
 
+> **Ascend fork** of [jenssegers/model](https://github.com/jenssegers/model), which is no longer maintained. Kept for Laravel 13+ support; used by `ascend-digital/blind-data-sdk` and `ascend-digital/workbooks`. The package name is unchanged, so install it by adding this repository to your project's `composer.json`:
+>
+> ```json
+> { "type": "vcs", "url": "git@github.com:Ascend-Digital/jenssegers-model.git" }
+> ```
+>
+> Planned for replacement in 2027.
+
 [![Build Status](http://img.shields.io/travis/jenssegers/model.svg)](https://travis-ci.org/jenssegers/model) [![Coverage Status](http://img.shields.io/coveralls/jenssegers/model.svg)](https://coveralls.io/r/jenssegers/model)
 
 This model provides an Laravel eloquent-like base class that can be used to build custom models in Laravel or other frameworks.
